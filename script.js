@@ -6,13 +6,17 @@ let totalPaginas = 0;
 const limite = 20;
 
 async function carregarPokemons() {
-
+    
+    document.getElementById("paginacao")
+        .classList.remove("oculto");
+    
     const offset = (paginaAtual - 1) * limite;
     
     const response = await fetch(
         `${API_BASE}?limit=${limite}&offset=${offset}`
     );
-   
+
+
     const data = await response.json();
     //Desabilitar botão anterior se não houver página anterior e desabilitar botão próximo se não houver página próxima
     if(!data.previous){
@@ -34,43 +38,45 @@ async function carregarPokemons() {
         .removeAttribute("disabled");
     }
     totalPaginas = Math.ceil(data.count / limite);
-
+    
     const lista =
-        document.getElementById("listaPokemons");
-
+    document.getElementById("listaPokemons");
+    
     lista.innerHTML = "";
-
+    
     for (const pokemon of data.results) {
-
+        
         const detalheResponse =
-            await fetch(pokemon.url);
-
+        await fetch(pokemon.url);
+        
         const detalhe =
-            await detalheResponse.json();
-
+        await detalheResponse.json();
+        
         const numero = 
-            await detalhe.id.toString().padStart(3, "0");
+        await detalhe.id.toString().padStart(3, "0");
         ``
-
-       lista.innerHTML += `
+        
+        lista.innerHTML += `
         <div class="card">
+        
+        <span class="numero">#${numero}</span>
+        
+        <img
+        src="${detalhe.sprites.front_default}"
+        alt="nome do pokemon"
+        />
 
-            <span class="numero">#${numero}</span>
-
-            <img
-            src="${detalhe.sprites.front_default}"
-            alt="${pokemon.name}"
-            />
+        <h3 class="nome-pokemon">${pokemon.name}</h3>
         `;
+        
         document.getElementById("paginaAtual")
             .textContent = `Página ${paginaAtual}`;
-        
     }
 }
 carregarPokemons();
 
 document.getElementById("paginaAtual")
-    .textContent = `Página ${paginaAtual} de ${totalPaginas}`;
+.textContent = `Página ${paginaAtual} de ${totalPaginas}`;
 
 document.getElementById("btnAnterior").disabled =
     paginaAtual === 1;
@@ -96,6 +102,97 @@ document
             paginaAtual--;
 
             carregarPokemons();
+        }
+
+    });
+
+//INPUT DE BUSCA DE POKEMONS - FUNÇÃO DE BUSCA
+async function buscarPokemon() {
+
+    document.getElementById("paginacao")
+        .classList.add("oculto");
+
+    const nome = document
+        .getElementById("inputBusca")
+        .value
+        .trim()
+        .toLowerCase();
+
+    if (nome === "") {
+        document.getElementById("paginacao")
+            .style.display = "flex";
+        carregarPokemons();
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/${nome}`
+        );
+       
+        const pokemon = await response.json();
+
+        const lista =
+            document.getElementById("listaPokemons");
+
+        lista.innerHTML = `
+            <div class="card">
+
+                <img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}">
+
+                <h2>${pokemon.name}</h2>
+
+                <p>#${pokemon.id}</p>
+
+            </div>
+        `;
+
+        document.getElementById("paginacao")
+            .style.display = "none";
+//MODAL DE ERRO PARA POKEMON NÃO ENCONTRADO
+    } catch(error) {
+        console.error(error);
+        abrirModal("Pokémon não encontrado!");
+
+}
+}
+function abrirModal(mensagem) {
+        console.log("Abrindo modal de erro");
+        document.getElementById("mensagemErro")
+        .textContent = mensagem;
+        
+        document.getElementById("modalErro")
+        .style.display = "flex";
+         //ASSOCIANDO BOTÃO DE FECHAR MODAL AO MODAL DE ERRO
+        document
+            .getElementById("fecharModal")
+            .addEventListener("click", fecharModal);
+    }
+    
+    function fecharModal() {
+        
+        console.log("Botão clicado");
+        
+        document.getElementById("modalErro")
+            .style.display = "none";
+        
+       
+    }
+//ASSOCIANDO BOTÃO DE BUSCA AO INPUT DE BUSCA
+document
+    .getElementById("btnBuscar")
+    .addEventListener("click", buscarPokemon);
+
+//BUSCAR POKEMON AO PRESSIONAR ENTER NO INPUT DE BUSCA
+document
+    .getElementById("inputBusca")
+    .addEventListener("keydown", (event) => {
+
+        if (event.key === "Enter") {
+
+            buscarPokemon();
+
         }
 
     });

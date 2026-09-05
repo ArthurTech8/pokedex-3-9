@@ -15,9 +15,23 @@
     </header>
 
     <main class="lista-pokemons">
+        <div class="busca">
+
+            <input
+                type="text"
+                id="inputBusca"
+                placeholder="Digite o nome do Pokémon"
+            >
+
+            <button id="btnBuscar">
+                Buscar
+            </button>
+
+        </div>
+        
         <div id="listaPokemons"></div>
 
-        <div class="paginacao">
+        <div class="paginacao" id="paginacao">
 
             <button id="btnAnterior">
                 Anterior
@@ -32,6 +46,23 @@
             </button>
 
         </div>
+
+        <div id="modalErro" class="modal">
+
+            <div class="modal-content">
+
+                <h2>Ops!</h2>
+
+                <p id="mensagemErro">
+                    Pokémon não encontrado.
+                </p>
+
+                <button id="fecharModal">
+                    Fechar
+                </button>
+            </div>
+
+</div>
     </main>
 
     <script src="./script.js"></script>

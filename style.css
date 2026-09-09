@@ -182,3 +182,126 @@ header {
 .oculto {
     display: none;
 }
+
+/* PÁGINA DE DETALHES */
+
+#cardDetalhes {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.card.detalhes {
+    width: 500px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.card.detalhes img {
+    width: 220px;
+    height: 220px;
+
+    object-fit: contain;
+
+    align-self: center;
+}
+
+.card.detalhes h2 {
+    color: white;
+
+    margin-top: 15px;
+
+    font-size: 32px;
+
+    text-transform: capitalize;
+}
+
+.atributos {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.atributos p {
+    background: rgba(255,255,255,.9);
+
+    color: #222;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    font-weight: bold;
+}
+
+/* BOTÃO VOLTAR */
+
+.btn-voltar {
+
+    margin-top: 15px;
+
+    background: #ef5350;
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 24px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    width: 100%;
+}
+
+.btn-voltar:hover {
+
+    background: #d84343;
+}
+
+.tipo {
+    
+    color: white;
+
+    font-weight: bold;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 18px;
+
+    text-transform: capitalize;
+}
+
+.numeroDetalhes {
+    color: rgba(255,255,255,.7);
+}

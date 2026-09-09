@@ -52,28 +52,42 @@ async function carregarPokemons() {
         const detalhe =
         await detalheResponse.json();
         
-        const numero = 
-        await detalhe.id.toString().padStart(3, "0");
+        const numero =
+            detalhe.id.toString().padStart(3, "0");
         ``
-        
-        lista.innerHTML += `
-        <div class="card">
-        
-        <span class="numero">#${numero}</span>
-        
-        <img
-        src="${detalhe.sprites.front_default}"
-        alt="nome do pokemon"
-        />
 
-        <h3 class="nome-pokemon">${pokemon.name}</h3>
+        lista.innerHTML += `
+        <div
+            class="card"
+            onclick="abrirDetalhes(${detalhe.id})"
+        >
+
+            <span class="numero">
+                #${numero}
+            </span>
+
+            <img
+                src="${detalhe.sprites.front_default}"
+                alt="${pokemon.name}"
+            />
+
+            <h3 class="nome-pokemon">
+                ${pokemon.name}
+            </h3>
+
+        </div>
         `;
         
         document.getElementById("paginaAtual")
-            .textContent = `Página ${paginaAtual}`;
+        .textContent = `Página ${paginaAtual}`;
     }
 }
 carregarPokemons();
+
+function abrirDetalhes(id) {
+    window.location.href =
+        `detalhes.html?id=${id}`;
+}
 
 document.getElementById("paginaAtual")
 .textContent = `Página ${paginaAtual} de ${totalPaginas}`;
